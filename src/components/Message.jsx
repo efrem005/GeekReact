@@ -1,12 +1,31 @@
 import React from "react"
-import "./message.scss"
+import {Card, CardContent, Typography} from "@material-ui/core";
+import {useStylesMessage} from "../styles";
+import PropTypes from 'prop-types'
 
 const Message = ({message}) => {
+
+    const classes = useStylesMessage();
+
     return (
-        <div className="block">
-            <div className="block_message">Сообщения: <span className="block_message__text">{message.text}</span> от {message.author}</div>
-        </div>
+        <Card className={classes.msg}>
+            <CardContent>
+                <Typography variant="h4" color="textSecondary">
+                    {message.author}
+                </Typography>
+                <Typography variant="h5" component="h2">
+                    {message.text}
+                </Typography>
+            </CardContent>
+        </Card>
     )
+}
+
+Message.prototype = {
+    message: {
+        text: PropTypes.string,
+        author: PropTypes.string
+    }
 }
 
 export default Message
