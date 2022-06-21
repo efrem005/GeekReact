@@ -28,7 +28,10 @@ const Form = ({handClick}) => {
     }
 
     const handleChangeForm = useCallback((e) => {
-        if(e.key === 'Enter') handClick(text, author)
+        if(e.key === 'Enter') {
+            handClick(text, author)
+            setText('')
+        }
     }, [text, author, handClick])
 
     return (
@@ -78,7 +81,7 @@ const Form = ({handClick}) => {
                         type="submit"
                         fullWidth
                         variant="text"
-                        color="primary"
+                        size={"large"}
                         className={classes.submit}
                     >
                         отправить
