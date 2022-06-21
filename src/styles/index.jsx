@@ -41,6 +41,7 @@ export const useStylesApp = makeStyles((theme) => ({
         flexGrow: 1,
     },
     drawerPaper: {
+        color: theme.primary,
         position: 'relative',
         whiteSpace: 'nowrap',
         width: drawerWidth,
@@ -57,7 +58,7 @@ export const useStylesApp = makeStyles((theme) => ({
         }),
         width: theme.spacing(7),
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9),
+            width: theme.spacing(7),
         },
     },
     appBarSpacer: theme.mixins.toolbar,
@@ -96,3 +97,22 @@ export const useStylesMessage = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
     }
 }))
+
+export const useStylesModal = makeStyles((theme) => ({
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    paper: {
+        height: '200px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    }
+}));
