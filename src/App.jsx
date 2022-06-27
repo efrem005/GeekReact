@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Routes, Route} from 'react-router-dom'
 import Layout from './pages/Layout'
 import ChatPage from "./pages/ChatPage";
@@ -7,11 +7,13 @@ import AboutPage from "./pages/AboutPage";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
 import {createTheme, ThemeProvider} from "@material-ui/core";
+// import {useDispatch, useSelector} from "react-redux";
 
 
 export default function App() {
 
-    const [messageList, setMessageList] = useState([])
+    // const dispatch = useDispatch()
+    // const messageList = useSelector(state => state.message)
     const [dark, setDark] = useState(false)
 
     const theme = createTheme({
@@ -32,22 +34,22 @@ export default function App() {
         }
     })
 
-    useEffect(() => {
-        setTimeout(() => {
-            botMessage(messageList)
-        }, 1500)
-    }, [messageList])
-
-    const botMessage = (messageList) => {
-        const lastAuthor = messageList[messageList.length - 1]
-        if (lastAuthor && lastAuthor.author) {
-            setMessageList(prevState => [...prevState, {
-                id: Date.now(),
-                chat_id: lastAuthor.chat_id,
-                text: `сообщение отправленно от ${lastAuthor.author}`
-            }])
-        }
-    }
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         botMessage()
+    //     }, 1500)
+    // }, [messageList])
+    //
+    // const botMessage = () => {
+    //     const lastAuthor = messageList[messageList.length - 1]
+    //     if (lastAuthor && lastAuthor.author) {
+    //         dispatch({type: "BOT_MESSAGE", payload: {
+    //                 id: Date.now(),
+    //                 chat_id: lastAuthor.chat_id,
+    //                 text: `сообщение отправленно от ${lastAuthor.author}`
+    //             }})
+    //     }
+    // }
 
     const toggleChecked = () => {
         setDark(!dark)
@@ -58,8 +60,7 @@ export default function App() {
             <Routes>
                 <Route path={'/'} element={<Layout dark={dark} toggleChecked={toggleChecked}/>}>
                     <Route index element={<HomePage/>}/>
-                    <Route path={'/chat/:id'}
-                           element={<ChatPage messageList={messageList} setMessageList={setMessageList}/>}/>
+                    <Route path={'/chat/:id'} element={<ChatPage />}/>
                     <Route path={'/profile'} element={<ProfilePage/>}/>
                     <Route path={'/about'} element={<AboutPage/>}/>
                     <Route path={'*'} element={<ErrorPage/>}/>
