@@ -4,13 +4,14 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import {Button, ButtonGroup, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
+import {getCounter} from "../store/reducer/counterReducer/counterSelector";
 
 
 
 const HomePage = () => {
     const classes = useStylesApp();
     const dispatch = useDispatch();
-    const count = useSelector(state => state.counter)
+    const count = useSelector(getCounter)
 
     return (
         <Paper className={classes.paper}>
@@ -22,9 +23,9 @@ const HomePage = () => {
                     {count}
                 </Typography>
                 <ButtonGroup variant={count > 8 ? 'outlined' : 'contained'} color={count > 5 ? 'secondary' : 'primary'} aria-label="contained primary button group">
-                    <Button onClick={() => dispatch({type: 'increment'})}>+</Button>
-                    <Button onClick={() => dispatch({type: 'reset'})}>RESET</Button>
-                    <Button onClick={() => dispatch({type: 'decrement'})}>-</Button>
+                    <Button onClick={() => dispatch({type: 'INCREMENT'})}>+</Button>
+                    <Button onClick={() => dispatch({type: 'RESET'})}>RESET</Button>
+                    <Button onClick={() => dispatch({type: 'DECREMENT'})}>-</Button>
                 </ButtonGroup>
             </Grid>
         </Paper>

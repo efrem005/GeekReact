@@ -1,25 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Message from "../components/Message";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Form from "../components/Form";
 import {useStylesApp} from "../styles";
 import {useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {getMessage} from "../store/reducer/messageReducer/messageSelector";
 
-const ChatPage = ({messageList, setMessageList}) => {
+const ChatPage = () => {
 
     const classes = useStylesApp();
-    const {id} = useParams()
-    const [chat, setChat] = useState([])
 
-    useEffect(() => {
-        setChat(messageList.filter(item => item.chat_id === +id))
-    }, [id, messageList])
+    const {id} = useParams()
+    const message = useSelector(getMessage)
+    const dispatch = useDispatch()
 
 
     const handClick = (text, author) => {
         if (text !== '' && author !== '') {
-            setMessageList([...messageList, {id: Date.now(), chat_id: +id, text, author}])
+            dispatch({type: "ADD_MESSAGE", payload: {id: Date.now(), chat_id: +id, text, author}})
         }
     }
 
@@ -28,7 +28,7 @@ const ChatPage = ({messageList, setMessageList}) => {
             <Paper style={{height: '70vh'}} className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid md={12} item>
-                        {chat.map((msg => <Message key={msg.id} message={msg} />))}
+                        {message.filter((msg => msg.chat_id === +id)).map((msg => <Message key={msg.id} message={msg} />))}
                     </Grid>
                 </Grid>
             </Paper>
