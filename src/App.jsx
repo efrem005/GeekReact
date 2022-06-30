@@ -7,13 +7,9 @@ import AboutPage from "./pages/AboutPage";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
 import {createTheme, ThemeProvider} from "@material-ui/core";
-// import {useDispatch, useSelector} from "react-redux";
-
 
 export default function App() {
 
-    // const dispatch = useDispatch()
-    // const messageList = useSelector(state => state.message)
     const [dark, setDark] = useState(false)
 
     const theme = createTheme({
@@ -33,23 +29,6 @@ export default function App() {
             }
         }
     })
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         botMessage()
-    //     }, 1500)
-    // }, [messageList])
-    //
-    // const botMessage = () => {
-    //     const lastAuthor = messageList[messageList.length - 1]
-    //     if (lastAuthor && lastAuthor.author) {
-    //         dispatch({type: "BOT_MESSAGE", payload: {
-    //                 id: Date.now(),
-    //                 chat_id: lastAuthor.chat_id,
-    //                 text: `сообщение отправленно от ${lastAuthor.author}`
-    //             }})
-    //     }
-    // }
 
     const toggleChecked = () => {
         setDark(!dark)

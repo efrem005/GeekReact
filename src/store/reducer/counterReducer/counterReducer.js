@@ -1,22 +1,24 @@
+import { INCREMENT, RESET, DECREMENT } from './actionType'
+
 const initialState = {
     counter: 0
 }
 
 const counterReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "INCREMENT": {
+        case INCREMENT: {
             return {
                 ...state,
                 counter: state.counter + 1
             }
         }
-        case "RESET": {
+        case RESET: {
             return {
                 ...state,
                 counter: 0
             }
         }
-        case "DECREMENT": {
+        case DECREMENT: {
             if (state.counter < 1) return {...state}
             return {
                 ...state,

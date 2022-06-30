@@ -1,14 +1,24 @@
-import {combineReducers, createStore} from 'redux'
-import messageReducer from "./reducer/messageReducer/messageReducer";
-import chatReducer from "./reducer/chatReducer/chatReducer";
-import counterReducer from "./reducer/counterReducer/counterReducer";
+import {applyMiddleware, legacy_createStore as createStore, compose} from 'redux'
+import thunk from 'redux-thunk'
+import storage from 'redux-persist/lib/storage'
+import rootReducer from "./reducer";
+import persistReducer from "redux-persist/es/persistReducer";
+import persistStore from "redux-persist/es/persistStore";
+import {botMessage} from "./middleware/botMessage";
+import logger from './middleware/logger'
 
-const rootStore = combineReducers({
-    counter: counterReducer,
-    message: messageReducer,
-    chat: chatReducer
-})
 
-const store = createStore(rootStore, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const composeEnhancers =
+    typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+        ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+        : compose;
 
-export default store
+const persistConfig = {
+    key: 'root',
+    storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+export const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk, logger, botMessage)))
+export const persistor = persistStore(store)
