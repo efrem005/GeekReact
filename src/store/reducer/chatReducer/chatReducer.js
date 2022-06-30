@@ -1,3 +1,4 @@
+import { SET_NAME, ADD_CHAT_LIST, DELETE_ITEM } from './actionType'
 
 const initialState = {
     chatItems: [
@@ -14,19 +15,19 @@ const initialState = {
 
 const chatReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "SET_NAME": {
+        case SET_NAME: {
             return {
                 ...state,
                 name: action.payload
             }
         }
-        case "ADD_CHAT_LIST":
+        case ADD_CHAT_LIST:
             return {
                 ...state,
                 chatItems: [...state.chatItems, {id: Date.now(), name: state.name}],
                 name: ''
             }
-        case "DELETE_ITEM": {
+        case DELETE_ITEM: {
             return {
                 ...state,
                 chatItems: state.chatItems.filter(item => item.id !== action.payload)

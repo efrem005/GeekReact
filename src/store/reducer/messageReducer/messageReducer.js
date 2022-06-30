@@ -1,15 +1,17 @@
+import { ADD_MESSAGE, BOT_MESSAGE } from './actionType'
+
 const initialState = []
 
 
 const messageReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "ADD_MESSAGE": {
+        case ADD_MESSAGE: {
             return [
                 ...state,
                 {...action.payload}
             ]
         }
-        case "BOT_MESSAGE": {
+        case BOT_MESSAGE: {
             return [
                 ...state,
                 {...action.payload}
