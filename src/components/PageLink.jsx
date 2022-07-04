@@ -11,7 +11,7 @@ const PageLink = () => {
 
     const [pages] = useState([
         {name: 'HOME', link: '/', icon: <Home />},
-        {name: 'PROFILE', link: '/profile', icon: <AssignmentInd />},
+        {name: 'USERS', link: '/users', icon: <AssignmentInd />},
         {name: 'ABOUT', link: '/about', icon: <Info />},
     ])
 
