@@ -57,7 +57,7 @@ const ProfilePage = () => {
                     {user.name}
                 </Typography>
                 <Typography variant={'h5'}>
-                    <Avatar style={{width: "100px", height: '100px'}} alt="Remy Sharp"  src={user.avatar_url}></Avatar>
+                    <Avatar style={{width: "100px", height: '100px'}} alt="Remy Sharp"  src={user.avatar_url} />
                 </Typography>
             </Grid>
         </Paper>

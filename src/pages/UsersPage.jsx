@@ -60,7 +60,7 @@ const UsersPage = () => {
                         <Grid key={user.id} container item wrap="nowrap" justifyContent={'flex-start'} alignItems={'center'} spacing={2}>
                             <CustomLink to={`/profile/${user.id}`}>
                                 <Grid item>
-                                    <Avatar src={user.avatar_url}></Avatar>
+                                    <Avatar src={user.avatar_url} />
                                 </Grid>
                                 <Grid item>
                                 <Typography style={{color: 'black', paddingLeft: '5px'}} variant={'h5'}>{user.login}</Typography>
