@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import {Routes, Route} from 'react-router-dom'
 import Layout from './pages/Layout'
 import ChatPage from "./pages/ChatPage";
-import ProfilePage from "./pages/ProfilePage";
+import UsersPage from "./pages/UsersPage";
 import AboutPage from "./pages/AboutPage";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
 import {createTheme, ThemeProvider} from "@material-ui/core";
+import ProfilePage from "./pages/ProfilePage";
 
 export default function App() {
 
@@ -40,8 +41,9 @@ export default function App() {
                 <Route path={'/'} element={<Layout dark={dark} toggleChecked={toggleChecked}/>}>
                     <Route index element={<HomePage/>}/>
                     <Route path={'/chat/:id'} element={<ChatPage />}/>
-                    <Route path={'/profile'} element={<ProfilePage/>}/>
                     <Route path={'/about'} element={<AboutPage/>}/>
+                    <Route path={'/users'} element={<UsersPage />}/>
+                    <Route path={'/profile/:id'} element={<ProfilePage />}/>
                     <Route path={'*'} element={<ErrorPage/>}/>
                 </Route>
             </Routes>
