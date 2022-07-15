@@ -1,40 +1,52 @@
-import {ERROR, GET_API_USER, GET_API_USERS, SET_LOADER} from "./actionType";
-import {loader, setError, userOne, usersAll} from "./actionCreated";
+import * as types from "./actionType";
+import {
+    loginError,
+    loginStart,
+    loginSuccess, logoutError,
+    logoutStart, logoutSuccess,
+    registerError,
+    registerStart,
+    registerSuccess
+} from "./actionCreated";
+import {auth} from "../../../util/firebase";
 
 const initialState = {
-    users: [],
-    user: [],
-    loader: false,
-    error: null
+    user: null,
+    error: null,
+    loading: false
 }
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_API_USERS:
+        case types.REGISTER_START:
+        case types.LOGIN_START:
+        case types.LOGOUT_START:
             return {
                 ...state,
-                users: action.payload,
-                loader: false,
-                error: null
+                loading: true
             }
-        case GET_API_USER:
+        case types.REGISTER_SUCCESS:
+        case types.LOGIN_SUCCESS:
             return {
                 ...state,
                 user: action.payload,
-                loader: false,
+                loading: false,
                 error: null
             }
-        case SET_LOADER: {
+        case types.LOGOUT_SUCCESS:
             return {
                 ...state,
-                loader: true
+                user: null,
+                loading: false,
+                error: null
             }
-        }
-        case ERROR:
+        case types.REGISTER_ERROR:
+        case types.LOGIN_ERROR:
+        case types.LOGOUT_ERROR:
             return {
                 ...state,
                 error: action.payload,
-                loader: false
+                loading: false
             }
         default:
             return state
@@ -43,28 +55,36 @@ const usersReducer = (state = initialState, action) => {
 
 export default usersReducer
 
-export const apiUsers = () => {
-    return async dispatch => {
-        dispatch(loader())
-        try {
-            const response = await fetch('https://api.github.com/users')
-            const data = await response.json();
-            dispatch(usersAll(data))
-        } catch (e) {
-            dispatch(setError(e))
-        }
+export const registerInitial = (email, password, displayName) => {
+    return dispatch => {
+        dispatch(registerStart())
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .then(({user}) => {
+                console.log(user)
+                user.updateProfile({ displayName })
+                dispatch(registerSuccess(user))
+            })
+            .catch(err => dispatch(registerError(err)))
     }
 }
 
-export const apiUserOne = (id) => {
-    return async dispatch => {
-        dispatch(loader())
-        try {
-            const response = await fetch(`https://api.github.com/users/${id}`)
-            const data = await response.json();
-            dispatch(userOne(data))
-        } catch (error) {
-            dispatch(setError(error))
-        }
+export const loginInitial = (email, password) => {
+    return dispatch => {
+        dispatch(loginStart())
+        auth
+            .signInWithEmailAndPassword(email, password)
+            .then(({user}) => dispatch(loginSuccess(user)))
+            .catch(err => dispatch(loginError(err)))
+    }
+}
+
+export const logoutInitial = () => {
+    return dispatch => {
+        dispatch(logoutStart())
+        auth
+            .signOut()
+            .then(() => dispatch(logoutSuccess()))
+            .catch(err => dispatch(logoutError(err)))
     }
 }
