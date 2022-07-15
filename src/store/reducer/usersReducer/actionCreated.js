@@ -1,20 +1,42 @@
-import {ERROR, GET_API_USER, GET_API_USERS, SET_LOADER} from "./actionType";
+import * as types from "./actionType";
 
-export const usersAll = (data) => ({
-    type: GET_API_USERS,
-    payload: data
+export const registerStart = () => ({
+    type: types.REGISTER_START
 })
 
-export const userOne = (data) => ({
-    type: GET_API_USER,
-    payload: data
+export const registerSuccess = (user) => ({
+    type: types.REGISTER_SUCCESS,
+    payload: user
 })
 
-export const loader = () => ({
-    type: SET_LOADER
+export const registerError = (err) => ({
+    type: types.REGISTER_ERROR,
+    payload: err.toString()
 })
 
-export const setError = (e) => (    {
-    type: ERROR,
-    payload: e.toString()
+export const loginStart = () => ({
+    type: types.LOGIN_START
+})
+
+export const loginSuccess = (user) => ({
+    type: types.LOGIN_SUCCESS,
+    payload: user
+})
+
+export const loginError = (err) => ({
+    type: types.LOGIN_ERROR,
+    payload: err.toString()
+})
+
+export const logoutStart = () => ({
+    type: types.LOGOUT_START
+})
+
+export const logoutSuccess = () => ({
+    type: types.LOGOUT_SUCCESS,
+})
+
+export const logoutError = (err) => ({
+    type: types.LOGOUT_ERROR,
+    payload: err.toString()
 })

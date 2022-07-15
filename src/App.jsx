@@ -8,6 +8,8 @@ import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
 import {createTheme, ThemeProvider} from "@material-ui/core";
 import ProfilePage from "./pages/ProfilePage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 export default function App() {
 
@@ -21,8 +23,7 @@ export default function App() {
                 main: '#3f50b5',
                 dark: '#002884',
                 contrastText: '#fff',
-            },
-            secondary: {
+            }, secondary: {
                 light: '#ff7961',
                 main: '#f44336',
                 dark: '#ba000d',
@@ -35,18 +36,18 @@ export default function App() {
         setDark(!dark)
     }
 
-    return (
-        <ThemeProvider theme={theme}>
-            <Routes>
-                <Route path={'/'} element={<Layout dark={dark} toggleChecked={toggleChecked}/>}>
-                    <Route index element={<HomePage/>}/>
-                    <Route path={'/chat/:id'} element={<ChatPage />}/>
-                    <Route path={'/about'} element={<AboutPage/>}/>
-                    <Route path={'/users'} element={<UsersPage />}/>
-                    <Route path={'/profile/:id'} element={<ProfilePage />}/>
-                    <Route path={'*'} element={<ErrorPage/>}/>
-                </Route>
-            </Routes>
-        </ThemeProvider>
-    );
+    return (<ThemeProvider theme={theme}>
+        <Routes>
+            <Route path={'/'} element={<Layout dark={dark} toggleChecked={toggleChecked}/>}>
+                <Route index element={<HomePage/>}/>
+                <Route path={'/chat/:id'} element={<ChatPage/>}/>
+                <Route path={'/about'} element={<AboutPage/>}/>
+                <Route path={'/users'} element={<UsersPage/>}/>
+                <Route path={'/profile/:id'} element={<ProfilePage/>}/>
+                <Route path={'/register'} element={<RegisterPage />}/>
+                <Route path={'/login'} element={<LoginPage />}/>
+                <Route path={'*'} element={<ErrorPage/>}/>
+            </Route>
+        </Routes>
+    </ThemeProvider>);
 }

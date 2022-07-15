@@ -14,12 +14,19 @@ import ListChat from "../components/ChatLink";
 import Container from "@material-ui/core/Container";
 import {useStylesApp} from "../styles";
 import PageLink from "../components/PageLink";
-import {FormControlLabel, Switch} from "@material-ui/core";
+import {Button, FormControlLabel, Switch} from "@material-ui/core";
+import { useNavigate } from 'react-router-dom'
+import {useDispatch, useSelector} from "react-redux";
+import {userSelector} from "../store/reducer/usersReducer/usersSelector";
+import {logoutInitial} from "../store/reducer/usersReducer/usersReducer";
 
 const Layout = ({dark, toggleChecked}) => {
 
     const classes = useStylesApp();
     const [open, setOpen] = React.useState(true);
+    const navigate = useNavigate()
+    const user = useSelector(userSelector)
+    const dispatch = useDispatch()
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -27,6 +34,9 @@ const Layout = ({dark, toggleChecked}) => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    const handleLogout = () => {
+        dispatch(logoutInitial())
+    }
 
     return (
         <div className={classes.root}>
@@ -51,6 +61,18 @@ const Layout = ({dark, toggleChecked}) => {
                         label={dark ? "dark" : "light"}
                         labelPlacement="end"
                     />
+                    {user === null
+                        ?
+                            <>
+                                <Button variant="contained" style={{marginRight: '10px'}} onClick={() => navigate('/register')}>REGISTER</Button>
+                                <Button variant="contained" onClick={() => navigate('/login')} color={"primary"}>SIGN UP</Button>
+                            </>
+                        :
+                            <>
+                                <Button variant="contained" onClick={() => handleLogout()} color={"primary"}>LOGOUT</Button>
+                            </>
+                    }
+
                 </Toolbar>
             </AppBar>
             <Drawer
