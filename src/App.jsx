@@ -11,6 +11,8 @@ import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 
+const url = process.env.URL || '/'
+
 export default function App() {
 
     const [dark, setDark] = useState(false)
@@ -38,14 +40,14 @@ export default function App() {
 
     return (<ThemeProvider theme={theme}>
         <Routes>
-            <Route path={'/'} element={<Layout dark={dark} toggleChecked={toggleChecked}/>}>
+            <Route path={`${url}/`} element={<Layout dark={dark} toggleChecked={toggleChecked}/>}>
                 <Route index element={<HomePage/>}/>
-                <Route path={'/chat/:id'} element={<ChatPage/>}/>
-                <Route path={'/about'} element={<AboutPage/>}/>
-                <Route path={'/users'} element={<UsersPage/>}/>
-                <Route path={'/profile/:id'} element={<ProfilePage/>}/>
-                <Route path={'/register'} element={<RegisterPage />}/>
-                <Route path={'/login'} element={<LoginPage />}/>
+                <Route path={`${url}/chat/:id`} element={<ChatPage/>}/>
+                <Route path={`${url}/about`} element={<AboutPage/>}/>
+                <Route path={`${url}/users`} element={<UsersPage/>}/>
+                <Route path={`${url}/profile/:id`} element={<ProfilePage/>}/>
+                <Route path={`${url}/register`} element={<RegisterPage />}/>
+                <Route path={`${url}/login`} element={<LoginPage />}/>
                 <Route path={'*'} element={<ErrorPage/>}/>
             </Route>
         </Routes>
