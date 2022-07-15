@@ -1,23 +1,17 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useStylesApp} from "../styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import {Avatar, Button, Typography} from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
-import {apiUsers} from "../store/reducer/usersReducer/usersReducer";
-import {getLoader, getUsers, getError} from "../store/reducer/usersReducer/usersSelector";
+import {Avatar, Typography} from "@material-ui/core";
+import {useSelector} from "react-redux";
+import {userSelector, loadingSelector, errorSelector} from "../store/reducer/usersReducer/usersSelector";
 import CustomLink from "../components/CustomLink";
 
 const UsersPage = () => {
     const classes = useStylesApp()
-    const dispatch = useDispatch()
-    const users = useSelector(getUsers)
-    const error = useSelector(getError)
-    const loader = useSelector(getLoader)
-
-    useEffect(() => {
-        dispatch(apiUsers())
-    }, [dispatch])
+    const users = useSelector(userSelector)
+    const error = useSelector(errorSelector)
+    const loader = useSelector(loadingSelector)
 
     if (loader) {
         return (
@@ -42,7 +36,7 @@ const UsersPage = () => {
                         {error}
                     </Typography>
                     <Typography variant={'button'} style={{marginTop: '20px'}}>
-                        <Button variant="contained" onClick={() => dispatch(apiUsers())}>обновить</Button>
+                        {/*<Button variant="contained" onClick={() => dispatch(apiUsers())}>обновить</Button>*/}
                     </Typography>
                 </Grid>
             </Paper>

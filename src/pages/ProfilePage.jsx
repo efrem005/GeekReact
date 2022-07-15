@@ -1,26 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useStylesApp} from "../styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import {Avatar, Button, Typography} from "@material-ui/core";
-import {useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {apiUserOne} from "../store/reducer/usersReducer/usersReducer";
-import {getLoader, getUser, getError} from "../store/reducer/usersReducer/usersSelector";
+import {Avatar, Typography} from "@material-ui/core";
+import {useSelector} from "react-redux";
+import {userSelector, errorSelector, loadingSelector} from "../store/reducer/usersReducer/usersSelector";
 
 const ProfilePage = () => {
     const classes = useStylesApp();
-    const { id } = useParams()
-    const user = useSelector(getUser)
-    const error = useSelector(getError)
-    const loader = useSelector(getLoader)
-    const dispatch = useDispatch()
+    const user = useSelector(userSelector)
+    const error = useSelector(errorSelector)
+    const loading = useSelector(loadingSelector)
 
-    useEffect(() => {
-        dispatch(apiUserOne(id))
-    }, [id, dispatch])
-
-    if (loader) {
+    if (loading) {
         return (
             <Paper className={classes.paper}>
                 <Grid container style={{height: '85vh', padding: '10px'}} spacing={3}>
@@ -43,7 +35,7 @@ const ProfilePage = () => {
                         {error}
                     </Typography>
                     <Typography variant={'button'} style={{marginTop: '20px'}}>
-                        <Button variant="contained" onClick={() => dispatch(apiUserOne(id))}>обновить</Button>
+                        {/*<Button variant="contained" onClick={() => dispatch(apiUserOne(id))}>обновить</Button>*/}
                     </Typography>
                 </Grid>
             </Paper>

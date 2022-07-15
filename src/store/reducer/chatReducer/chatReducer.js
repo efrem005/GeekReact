@@ -1,4 +1,5 @@
-import { SET_NAME, ADD_CHAT_LIST, DELETE_ITEM } from './actionType'
+import {GET_CHAT_LIST, ADD_CHAT_LIST, DELETE_CHAT_LIST} from './actionType'
+import firebase from "firebase/compat/app";
 
 const initialState = {
     chatItems: [
@@ -9,25 +10,22 @@ const initialState = {
         {id: 5, name: 'chat 5'},
         {id: 6, name: 'chat 6'},
         {id: 7, name: 'chat 7'}
-    ],
-    name: ''
+    ]
 }
 
 const chatReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_NAME: {
+        case GET_CHAT_LIST:
             return {
                 ...state,
-                name: action.payload
+                chatItems: action.payload
             }
-        }
         case ADD_CHAT_LIST:
             return {
                 ...state,
-                chatItems: [...state.chatItems, {id: Date.now(), name: state.name}],
-                name: ''
+                chatItems: [...state.chatItems, {id: Date.now(), name: action.payload}]
             }
-        case DELETE_ITEM: {
+        case DELETE_CHAT_LIST: {
             return {
                 ...state,
                 chatItems: state.chatItems.filter(item => item.id !== action.payload)
@@ -40,3 +38,11 @@ const chatReducer = (state = initialState, action) => {
 }
 
 export default chatReducer
+
+export const getChatInitial = ({id, name}) => {
+    return dispatch => {
+        firebase.database().ref('chatList').set({
+            "id": Date.now()
+        })
+    }
+}

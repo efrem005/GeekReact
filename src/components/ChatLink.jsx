@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import {Button, List, Modal, TextField} from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
@@ -8,15 +8,17 @@ import CustomLink from "./CustomLink";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import {People, Delete, Add} from "@material-ui/icons";
 import ListItemText from "@material-ui/core/ListItemText";
-import {getChat} from '../store/reducer/chatReducer/chatSelector'
+import {getChatList} from '../store/reducer/chatReducer/chatSelector'
+import {addChatList, deleteChatList} from '../store/reducer/chatReducer/actionCreated'
 import {useDispatch, useSelector} from "react-redux";
 
 const ChatLink = () => {
 
     const classes = useStylesModal();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [name, setName] = useState('')
 
-    const {chatItems, name} = useSelector(getChat)
+    const chatItems = useSelector(getChatList)
     const dispatch = useDispatch()
 
     const handleOpen = () => {
@@ -27,19 +29,16 @@ const ChatLink = () => {
         setOpen(false);
     };
 
-    const changeText = (e) => {
-        dispatch({type: "SET_NAME", payload: e.target.value})
-    }
+    const handleCreateChat = () => {
+        if (name === '') return
 
-    const handleAddChat = () => {
-        if (name !== '') {
-            dispatch({type: "ADD_CHAT_LIST"})
-            setOpen(false)
-        }
+        dispatch(addChatList(name))
+        setOpen(false)
+        setName('')
     };
 
-    const deleteItem = (id) => {
-        dispatch({type: "DELETE_ITEM", payload: id})
+    const deleteChat = (id) => {
+        dispatch(deleteChatList(id))
     }
 
     return (
@@ -55,7 +54,7 @@ const ChatLink = () => {
                                     <People/>
                                 </ListItemIcon>
                                 <ListItemText secondary={item.name}/>
-                                <ListItemIcon onClick={() => deleteItem(item.id)}>
+                                <ListItemIcon onClick={() => deleteChat(item.id)}>
                                     <Delete/>
                                 </ListItemIcon>
                             </ListItem>
@@ -81,7 +80,7 @@ const ChatLink = () => {
                     </Typography>
                     <TextField
                         fullWidth
-                        onChange={changeText}
+                        onChange={(e) => setName(e.target.value)}
                         value={name}
                         variant="outlined"
                         id="standard-basic"
@@ -92,7 +91,7 @@ const ChatLink = () => {
                         color="primary"
                         type="submit"
                         size="small"
-                        onClick={handleAddChat}
+                        onClick={handleCreateChat}
                     >
                         создать
                     </Button>
