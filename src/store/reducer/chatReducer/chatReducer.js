@@ -1,16 +1,9 @@
 import {GET_CHAT_LIST, ADD_CHAT_LIST, DELETE_CHAT_LIST} from './actionType'
-import firebase from "firebase/compat/app";
+import { db } from '../../../util/firebase'
+import {getInitialFirebase, getPayloadFromSnapshot} from "./actionCreated";
 
 const initialState = {
-    chatItems: [
-        {id: 1, name: 'chat 1'},
-        {id: 2, name: 'chat 2'},
-        {id: 3, name: 'chat 3'},
-        {id: 4, name: 'chat 4'},
-        {id: 5, name: 'chat 5'},
-        {id: 6, name: 'chat 6'},
-        {id: 7, name: 'chat 7'}
-    ]
+    chatItems: []
 }
 
 const chatReducer = (state = initialState, action) => {
@@ -39,10 +32,17 @@ const chatReducer = (state = initialState, action) => {
 
 export default chatReducer
 
-export const getChatInitial = ({id, name}) => {
+export const getChatInitial = () => {
     return dispatch => {
-        firebase.database().ref('chatList').set({
-            "id": Date.now()
+        db.ref("chatList").on("value", (snapshot) => {
+            const payload = getPayloadFromSnapshot(snapshot);
+            dispatch(getInitialFirebase(payload.chatList))
         })
+    }
+}
+
+export const setChatList = (name) => {
+    return dispatch => {
+        db.ref("chatList").push(name)
     }
 }
