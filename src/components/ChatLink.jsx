@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import {Button, List, Modal, TextField} from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
@@ -9,7 +9,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import {People, Delete, Add} from "@material-ui/icons";
 import ListItemText from "@material-ui/core/ListItemText";
 import {getChatList} from '../store/reducer/chatReducer/chatSelector'
-import {addChatList, deleteChatList} from '../store/reducer/chatReducer/actionCreated'
+import {deleteChatList} from '../store/reducer/chatReducer/actionCreated'
+import {getChatInitial, setChatList} from '../store/reducer/chatReducer/chatReducer'
 import {useDispatch, useSelector} from "react-redux";
 
 const ChatLink = () => {
@@ -32,7 +33,7 @@ const ChatLink = () => {
     const handleCreateChat = () => {
         if (name === '') return
 
-        dispatch(addChatList(name))
+        dispatch(setChatList(name))
         setOpen(false)
         setName('')
     };
@@ -40,6 +41,11 @@ const ChatLink = () => {
     const deleteChat = (id) => {
         dispatch(deleteChatList(id))
     }
+
+
+    useEffect(() => {
+        dispatch(getChatInitial())
+    },[dispatch])
 
     return (
         <>

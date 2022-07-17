@@ -11,7 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 
-const url = process.env.REACT_APP_URL
+const url = '/'
 
 export default function App() {
 
